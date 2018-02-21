@@ -296,9 +296,9 @@ class PlayerViewController: UIViewController {
             
             let buttonImageName = newRate == 1.0 ? "PauseButton" : "PlayButton"
             
-            let buttonImage = UIImage(named: buttonImageName)
-            
-            playPauseButton.setImage(buttonImage, for: UIControlState())
+//            let buttonImage = UIImage(named: buttonImageName)
+//
+//            playPauseButton.setImage(buttonImage, for: UIControlState())
         }
         else if keyPath == #keyPath(PlayerViewController.player.currentItem.status) {
             // Display an error if status becomes `.Failed`.

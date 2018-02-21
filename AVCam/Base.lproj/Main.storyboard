@@ -251,6 +251,9 @@
                                 <state key="normal" title="playPause">
                                     <color key="titleColor" red="0.0" green="0.23098346450000001" blue="1" alpha="0.60000002379999995" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
+                                <connections>
+                                    <action selector="playPauseButtonWasPressed:" destination="291-E3-9Pn" eventType="touchUpInside" id="g4B-Zw-ina"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2XV-3W-6n8">
                                 <rect key="frame" x="20" y="598" width="82" height="30"/>
@@ -275,7 +278,7 @@
                     <connections>
                         <outlet property="durationLabel" destination="UvQ-yq-jcJ" id="QnD-JH-sw3"/>
                         <outlet property="fastForwardButton" destination="2XV-3W-6n8" id="OML-QI-ygv"/>
-                        <outlet property="playPauseButton" destination="D5c-ZY-16Q" id="Xbh-pb-iAW"/>
+                        <outlet property="playPauseButton" destination="iH3-im-MiI" id="3Zg-Qb-YEb"/>
                         <outlet property="playerView" destination="iH3-im-MiI" id="y0S-wU-lrA"/>
                         <outlet property="rewindButton" destination="odT-ba-tX5" id="HLJ-Sw-M4R"/>
                         <outlet property="startTimeLabel" destination="XNN-c3-53y" id="EK5-gD-e14"/>

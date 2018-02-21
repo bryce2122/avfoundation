@@ -139,6 +139,15 @@ class PlayerViewController: UIViewController {
         }
     }
     
+    
+    override func viewDidLoad() {
+        player.play()
+    
+        if currentTime == duration {
+            currentTime = 0.0
+        }
+    }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
@@ -249,6 +258,15 @@ class PlayerViewController: UIViewController {
     // Update our UI when player or `player.currentItem` changes.
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         // Make sure the this KVO callback was intended for this view controller.
+        print("THIS IS A CONTROL CHECK")
+        if currentTime == duration {
+            currentTime = 0.0
+            player.play()
+        }
+
+        
+        
+        
         guard context == &playerViewControllerKVOContext else {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
             return

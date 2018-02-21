@@ -25,6 +25,7 @@ class PlayerViewController: UIViewController {
         "playable",
         "hasProtectedContent"
     ]
+    var url: URL!
     
     @objc let player = AVPlayer()
     
@@ -124,8 +125,8 @@ class PlayerViewController: UIViewController {
         playerView.playerLayer.player = player
         
         let movieURL = Bundle.main.url(forResource: "ElephantSeals", withExtension: "mov")!
-        let url = URL(string: "rwERWERwe")
-        asset = AVURLAsset(url: movieURL, options: nil)
+        print(self.url)
+        asset = AVURLAsset(url: self.url, options: nil)
         
         // Make sure we don't have a strong reference cycle by only capturing self as weak.
         let interval = CMTimeMake(1, 1)

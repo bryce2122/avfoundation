@@ -11,6 +11,16 @@ import Photos
 
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     // MARK: View Controller Life Cycle
+    var filePath : URL!
+    override func prepare(for segue: UIStoryboardSegue,sender: Any?) {
+        var PlayerController = segue.destination as! PlayerViewController
+        PlayerController.url = self.filePath
+        
+        
+    }
+    
+  
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -756,24 +766,24 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
          Note: Since we use a unique file path for each recording, a new recording will
          not overwrite a recording currently being saved.
          */
-        func cleanUp() {
-            let path = outputFileURL.path
-            if FileManager.default.fileExists(atPath: path) {
-                do {
-                    try FileManager.default.removeItem(atPath: path)
-                } catch {
-                    print("Could not remove file at url: \(outputFileURL)")
-                }
-            }
-            
-            if let currentBackgroundRecordingID = backgroundRecordingID {
-                backgroundRecordingID = UIBackgroundTaskInvalid
-                
-                if currentBackgroundRecordingID != UIBackgroundTaskInvalid {
-                    UIApplication.shared.endBackgroundTask(currentBackgroundRecordingID)
-                }
-            }
-        }
+//        func cleanUp() {
+//            let path = outputFileURL.path
+//            if FileManager.default.fileExists(atPath: path) {
+//                do {
+//                    try FileManager.default.removeItem(atPath: path)
+//                } catch {
+//                    print("Could not remove file at url: \(outputFileURL)")
+//                }
+//            }
+//
+//            if let currentBackgroundRecordingID = backgroundRecordingID {
+//                backgroundRecordingID = UIBackgroundTaskInvalid
+//
+//                if currentBackgroundRecordingID != UIBackgroundTaskInvalid {
+//                    UIApplication.shared.endBackgroundTask(currentBackgroundRecordingID)
+//                }
+//            }
+//        }
         
         var success = true
         
@@ -783,8 +793,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
         
         if success {
-            print(outputFileURL)
-            print("CHECK")
+            self.filePath = outputFileURL
+            print("FILEPATH")
+            print(self.filePath)
 			// Check authorization status.
 			PHPhotoLibrary.requestAuthorization { status in
 				if status == .authorized {
@@ -798,15 +809,15 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 							if !success {
 								print("Could not save movie to photo library: \(String(describing: error))")
 							}
-							cleanUp()
+//                            cleanUp()
 						}
 					)
 				} else {
-					cleanUp()
+//                    cleanUp()
 				}
 			}
 		} else {
-			cleanUp()
+//            cleanUp()
 		}
 		
 		// Enable the Camera and Record buttons to let the user switch camera and start another recording.
@@ -819,6 +830,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 		}
         print("check")
         self.performSegue(withIdentifier: "PreviewLoop", sender: nil)
+       
 	}
 	
 	// MARK: KVO and Notifications

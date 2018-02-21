@@ -16,7 +16,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         var PlayerController = segue.destination as! PlayerViewController
         PlayerController.url = self.filePath
         
-        
     }
     
   
@@ -756,6 +755,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     }
     
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        self.filePath = outputFileURL
+        print("FILEPATH")
+        
         /*
          Note that currentBackgroundRecordingID is used to end the background task
          associated with this recording. This allows a new recording to be started,
@@ -767,6 +769,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
          not overwrite a recording currently being saved.
          */
 //        func cleanUp() {
+//            print("CLEAN")
 //            let path = outputFileURL.path
 //            if FileManager.default.fileExists(atPath: path) {
 //                do {
@@ -784,41 +787,41 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 //                }
 //            }
 //        }
-        
-        var success = true
-        
-        if error != nil {
-            print("Movie file finishing error: \(String(describing: error))")
-            success = (((error! as NSError).userInfo[AVErrorRecordingSuccessfullyFinishedKey] as AnyObject).boolValue)!
-        }
-        
-        if success {
-            self.filePath = outputFileURL
-            print("FILEPATH")
-            print(self.filePath)
-			// Check authorization status.
-			PHPhotoLibrary.requestAuthorization { status in
-				if status == .authorized {
-					// Save the movie file to the photo library and cleanup.
-					PHPhotoLibrary.shared().performChanges({
-							let options = PHAssetResourceCreationOptions()
-							options.shouldMoveFile = true
-							let creationRequest = PHAssetCreationRequest.forAsset()
-							creationRequest.addResource(with: .video, fileURL: outputFileURL, options: options)
-						}, completionHandler: { success, error in
-							if !success {
-								print("Could not save movie to photo library: \(String(describing: error))")
-							}
-//                            cleanUp()
-						}
-					)
-				} else {
-//                    cleanUp()
-				}
-			}
-		} else {
-//            cleanUp()
-		}
+//
+//        var success = true
+//
+//        if error != nil {
+//            print("Movie file finishing error: \(String(describing: error))")
+//            success = (((error! as NSError).userInfo[AVErrorRecordingSuccessfullyFinishedKey] as AnyObject).boolValue)!
+//        }
+//
+//        if success {
+//            self.filePath = outputFileURL
+//            print("FILEPATH")
+//            print(self.filePath)
+//            // Check authorization status.
+//            PHPhotoLibrary.requestAuthorization { status in
+//                if status == .authorized {
+//                    // Save the movie file to the photo library and cleanup.
+//                    PHPhotoLibrary.shared().performChanges({
+//                        let options = PHAssetResourceCreationOptions()
+//                        options.shouldMoveFile = true
+//                            let creationRequest = PHAssetCreationRequest.forAsset()
+//                            creationRequest.addResource(with: .video, fileURL: outputFileURL, options: options)
+//                        }, completionHandler: { success, error in
+//                            if !success {
+//                                print("Could not save movie to photo library: \(String(describing: error))")
+//                            }
+////                            cleanUp()
+//                        }
+//                    )
+//                } else {
+////                    cleanUp()
+//                }
+//            }
+//        } else {
+////            cleanUp()
+//        }
 		
 		// Enable the Camera and Record buttons to let the user switch camera and start another recording.
 		DispatchQueue.main.async {

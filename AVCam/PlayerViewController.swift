@@ -125,6 +125,7 @@ class PlayerViewController: UIViewController {
         playerView.playerLayer.player = player
         
         let movieURL = Bundle.main.url(forResource: "ElephantSeals", withExtension: "mov")!
+        print("URL")
         print(self.url)
         asset = AVURLAsset(url: self.url, options: nil)
         

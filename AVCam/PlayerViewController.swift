@@ -97,12 +97,12 @@ class PlayerViewController: UIViewController {
     
     // MARK: - IBOutlets
     
-    @IBOutlet weak var timeSlider: UISlider!
-    @IBOutlet weak var startTimeLabel: UILabel!
-    @IBOutlet weak var durationLabel: UILabel!
-    @IBOutlet weak var rewindButton: UIButton!
-    @IBOutlet weak var playPauseButton: UIButton!
-    @IBOutlet weak var fastForwardButton: UIButton!
+//    @IBOutlet weak var timeSlider: UISlider!
+//    @IBOutlet weak var startTimeLabel: UILabel!
+//    @IBOutlet weak var durationLabel: UILabel!
+//    @IBOutlet weak var rewindButton: UIButton!
+//    @IBOutlet weak var playPauseButton: UIButton!
+//    @IBOutlet weak var fastForwardButton: UIButton!
     @IBOutlet weak var playerView: PlayerView!
     //    @IBOutlet weak var playerView: PlayerView!
     
@@ -134,19 +134,47 @@ class PlayerViewController: UIViewController {
         timeObserverToken = player.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main) { [unowned self] time in
             let timeElapsed = Float(CMTimeGetSeconds(time))
             
-            self.timeSlider.value = Float(timeElapsed)
-            self.startTimeLabel.text = self.createTimeString(time: timeElapsed)
+//            self.timeSlider.value = Float(timeElapsed)
+//            self.startTimeLabel.text = self.createTimeString(time: timeElapsed)
         }
     }
     
     
     override func viewDidLoad() {
         player.play()
-    
+        
         if currentTime == duration {
             currentTime = 0.0
         }
+        
+        //Looks for single or multiple taps.
+//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        
+        //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
+//        tap.cancelsTouchesInView = false
+        
+//        view.addGestureRecognizer(tap)
+        
+        print("CHECKERROR")
     }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true;
+    }
+    
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
+    }
+    
+    
+ 
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
+        view.endEditing(true)
+        super.touchesBegan(touches, with: event)
+    }
+    
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -223,31 +251,31 @@ class PlayerViewController: UIViewController {
     
     // MARK: - IBActions
     
-    @IBAction func playPauseButtonWasPressed(_ sender: UIButton) {
-        if player.rate != 1.0 {
-            // Not playing forward, so play.
-            if currentTime == duration {
-                // At end, so got back to begining.
-                currentTime = 0.0
-            }
-            
-            player.play()
-        }
-        else {
-            // Playing, so pause.
-            player.pause()
-        }
-    }
-    
-    @IBAction func rewindButtonWasPressed(_ sender: UIButton) {
-        // Rewind no faster than -2.0.
-        rate = max(player.rate - 2.0, -2.0)
-    }
-    
-    @IBAction func fastForwardButtonWasPressed(_ sender: UIButton) {
-        // Fast forward no faster than 2.0.
-        rate = min(player.rate + 2.0, 2.0)
-    }
+//    @IBAction func playPauseButtonWasPressed(_ sender: UIButton) {
+//        if player.rate != 1.0 {
+//            // Not playing forward, so play.
+//            if currentTime == duration {
+//                // At end, so got back to begining.
+//                currentTime = 0.0
+//            }
+//
+//            player.play()
+//        }
+//        else {
+//            // Playing, so pause.
+//            player.pause()
+//        }
+//    }
+//
+//    @IBAction func rewindButtonWasPressed(_ sender: UIButton) {
+//        // Rewind no faster than -2.0.
+//        rate = max(player.rate - 2.0, -2.0)
+//    }
+//
+//    @IBAction func fastForwardButtonWasPressed(_ sender: UIButton) {
+//        // Fast forward no faster than 2.0.
+//        rate = min(player.rate + 2.0, 2.0)
+//    }
     
     @IBAction func timeSliderDidChange(_ sender: UISlider) {
         currentTime = Double(sender.value)
@@ -291,23 +319,23 @@ class PlayerViewController: UIViewController {
             let newDurationSeconds = hasValidDuration ? CMTimeGetSeconds(newDuration) : 0.0
             let currentTime = hasValidDuration ? Float(CMTimeGetSeconds(player.currentTime())) : 0.0
             
-            timeSlider.maximumValue = Float(newDurationSeconds)
+//            timeSlider.maximumValue = Float(newDurationSeconds)
+//
+//            timeSlider.value = currentTime
+//
+//            rewindButton.isEnabled = hasValidDuration
+//
+//            playPauseButton.isEnabled = hasValidDuration
+//
+//            fastForwardButton.isEnabled = hasValidDuration
             
-            timeSlider.value = currentTime
-            
-            rewindButton.isEnabled = hasValidDuration
-            
-            playPauseButton.isEnabled = hasValidDuration
-            
-            fastForwardButton.isEnabled = hasValidDuration
-            
-            timeSlider.isEnabled = hasValidDuration
-            
-            startTimeLabel.isEnabled = hasValidDuration
-            startTimeLabel.text = createTimeString(time: currentTime)
-            
-            durationLabel.isEnabled = hasValidDuration
-            durationLabel.text = createTimeString(time: Float(newDurationSeconds))
+//            timeSlider.isEnabled = hasValidDuration
+//
+//            startTimeLabel.isEnabled = hasValidDuration
+//            startTimeLabel.text = createTimeString(time: currentTime)
+//
+//            durationLabel.isEnabled = hasValidDuration
+//            durationLabel.text = createTimeString(time: Float(newDurationSeconds))
         }
         else if keyPath == #keyPath(PlayerViewController.player.rate) {
             // Update `playPauseButton` image.

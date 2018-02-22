@@ -18,13 +18,16 @@ class PlayerView: UIView {
 
         set {
             playerLayer.player = newValue
+            playerLayer.videoGravity=AVLayerVideoGravity.resizeAspectFill;
         }
     }
-
+    
+    
+    
     var playerLayer: AVPlayerLayer {
         return layer as! AVPlayerLayer
     }
-
+   
     override class var layerClass: AnyClass {
         return AVPlayerLayer.self
     }
